@@ -1,0 +1,15 @@
+{
+  "kind": "singleType",
+  "collectionName": "news",
+  "info": {
+    "name": "New",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {}
+}

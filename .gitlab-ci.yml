@@ -1,0 +1,28 @@
+variables:
+  CMS_PATH: /usr/share/KYRREX/support_cms
+stages:          # List of stages for jobs, and their order of execution
+  - deploy
+#before_script:
+#  - sudo apt update
+#  - sudo apt install zip unzip -y
+deploy-staging-job:       # This job runs in the build stage, which runs first.
+  stage: deploy
+  only:
+    #- develop
+    - staging
+    #- merge_requests
+    #- /^release\/.*$/
+  except:
+    - tags
+  script:
+    - echo "Deploy started."
+    - sudo systemctl stop cms
+    - cp -r -u * $CMS_PATH
+    - cd $CMS_PATH
+    - npm install -q
+    - npm run build
+    - sudo chown -R ubuntu:ubuntu $CMS_PATH
+    - sudo systemctl start cms
+    - sudo systemctl restart nginx
+    - echo "Deploy completed."
+
